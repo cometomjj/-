@@ -1,0 +1,26 @@
+import cv2
+from keras.preprocessing import image
+from keras.models import load_model
+import numpy as np
+#加载模型
+model = load_model('F:\\BaiduNetdiskDownload\\aidazuoye\\smile2\\data\\smileAndUnsmile.h5')
+#本地图片路径
+def pic(img_path):
+    img = image.load_img(img_path, target_size=(150, 150))
+    img_tensor = image.img_to_array(img)/255.0
+    img_tensor = np.expand_dims(img_tensor, axis=0)
+    prediction =model.predict(img_tensor)  
+    print(prediction)
+    if prediction[0][0]>0.5:
+        result='非笑脸'
+    else:
+        result='笑脸'
+    print(result)
+a=[]
+a.append(r'F:\\BaiduNetdiskDownload\\aidazuoye\\smile2\\data\\test\smile\\file1115.jpg')
+a.append(r"F:\BaiduNetdiskDownload\aidazuoye\smile2\data\test\smile\file1120.jpg")
+
+a.append(r'F:\\BaiduNetdiskDownload\\aidazuoye\smile2\\data\\test\unsmile\\file2205.jpg')
+a.append(r"F:\BaiduNetdiskDownload\aidazuoye\smile2\data\test\unsmile\file2183.jpg")
+for url in a:
+    pic(url)
